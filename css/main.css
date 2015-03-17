@@ -1,10 +1,73 @@
 body {
-  padding-top: 30px;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 80px;
 }
 .title {
-  font-family: helvetica, Arial;
+  font-family: STHeiti Light, helvetica, Arial;
   text-align: center;
-  font-size: 30px;
+  font-size: 35px !important;
+  margin-bottom: 40px;
+}
+.profile {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 35px;
+
+}
+.profile-photo {
+  width: 75px;
+  height: 75px;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-raidus: 50%;
+  border-radius: 50%;
+  padding: 2px;
+  border: 2px solid #ddd;
+}
+.fatter-type {
+  line-height: 1.4;
+  font-size: 25px;
+}
+.fatter-type p {
+  margin-bottom: 30px;
+}
+a {
+  color: inherit;
+}
+a:hover {
+  color: #e13300;
+}
+.shadow {
+  box-shadow: 0 10px 4px -4px #ddd;
+  -webkit-box-shadow: 0 10px 4px -4px #ddd;
+  padding-bottom: 40px;
+}
+footer {
+  margin-top: 30px;
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 30px;
+  background-color: #333;
+  color: #ddd;
+  font-size: 20px;
+}
+footer a {
+  color: #888;
+  text-decoration: none;
+  transition: color 0.5s ease;
+}
+footer a:hover {
+  color: #ddd;
+  border-bottom: 2px dashed #ddd;
+}
+.backtotop {
+  text-decoration: none;
+  cursor: pointer;
+}
+.backtotop:hover {
+  border: none;
 }
 .nav {
   width: 200px;
@@ -19,4 +82,7 @@ body {
   text-decoration: none;
   font-family: helvetica, Arial;
   color: black;
+}
+.center {
+  text-align: center;
 }

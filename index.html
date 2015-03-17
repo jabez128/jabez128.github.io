@@ -1,14 +1,33 @@
 <!doctype html>
 <html>
 <head>
-	<title>张小俊128的博客</title>
+	<title>张小俊128</title>
 	<meta charset='utf8'>
+	<meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" type="text/css" href="css/main.css">	
+
 </head>
 <body>
-	<h1 class='title'>Programming and Thinking</h1>
-	<div class='nav'>
-		<span class='nav-item'><a href='/about'>About</a></span>
-	</div>
+	<h1 class='title'>张小俊128</h1>
+	<profile></profile>
+	<shadow></shadow>
+	<copyright>
+		<footer>
+			<p class="center">
+				<i>Powered by </i> <a href="https://muut.com/riotjs">riot.js</a> <i>and</i> <a href="https://pages.github.com/">GitPage</a>
+			</p>
+			<p class="center">
+				<a class="backtotop" href="javascript: window.scroll(0,0)">回到顶部</a>
+			</p>
+		</footer>
+	</copyright>
+	<script type="text/javascript" src="bower_components/riot/riot.min.js"></script>
+	<script type="text/javascript" src="components.js"></script>
+	<script type="text/javascript">
+		!function(){
+			riot.mount('*');
+			console.log(123);
+		}()
+	</script>
 </body>
 </html>
