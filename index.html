@@ -4,13 +4,14 @@
 	<title>张小俊128</title>
 	<meta charset='utf8'>
 	<meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<link rel="stylesheet" type="text/css" href="css/main.css">	
+	<link rel="stylesheet" type="text/css" href="css/main.css">
 
 </head>
 <body>
 	<h1 class='title'>张小俊128</h1>
 	<profile></profile>
 	<shadow></shadow>
+	<articles></articles>
 	<copyright>
 		<footer>
 			<p class="center">
@@ -21,13 +22,30 @@
 			</p>
 		</footer>
 	</copyright>
-	<script type="text/javascript" src="bower_components/riot/riot.min.js"></script>
-	<script type="text/javascript" src="components.js"></script>
+	<script type="text/javascript" src="js/riot.min.js"></script>
+	<script type="text/javascript" src="js/components.js"></script>
 	<script type="text/javascript">
 		!function(){
-			riot.mount('*');
-			console.log(123);
+			tags = riot.mount('*',{
+				"articles": [{
+								"title":"Angular 2 中 Annotation和Decoration有什么区别？",
+								"date": "2015-07-08",
+								"link": "",
+								"tags": [
+									{
+										"name": "Angular 2",
+										"bgcolor": "#DE3641",
+										"fontcolor": "white"
+									},{
+										"name": "TypeScript",
+										"bgcolor": "#1280CF",
+										"fontcolor": "white"
+									}
+								]
+							}]
+			});
 		}()
 	</script>
+	<script type="text/javascript"></script>
 </body>
 </html>

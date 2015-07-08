@@ -14,7 +14,6 @@ body {
   margin-left: auto;
   margin-right: auto;
   padding-top: 35px;
-
 }
 .profile-photo {
   width: 75px;
@@ -43,6 +42,40 @@ a:hover {
   box-shadow: 0 10px 4px -4px #ddd;
   -webkit-box-shadow: 0 10px 4px -4px #ddd;
   padding-bottom: 40px;
+}
+articles .articles{
+  font-family: STHeiti Light, helvetica, Arial;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+articles .article{
+  margin-bottom: 30px;
+}
+articles .title a{
+  font-family: STHeiti Light, helvetica, Arial;
+  text-align: left;
+  font-size: 0.7em;
+  text-decoration: none;
+}
+articles .date{
+  float: left;
+  font-size: 15px;
+}
+articles .appendix{
+  margin-top: 5px;
+}
+articles .tag{
+  border-radius: 3px;
+  font-size: 8px;
+  font-weight: bold;
+  padding: 5px;
+  position: relative;
+  top: -2px;
+  margin-left: 4px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 footer {
   margin-top: 30px;
@@ -85,4 +118,45 @@ footer a:hover {
 }
 .center {
   text-align: center;
+}
+.clear{
+  clear:both;
+}
+p::selection {  
+  background: "red";  
+  color: "white";    
+}
+p::-moz-selection {  
+  background: "red";  
+  color: "white";    
+}
+
+/*@media*/
+
+@media screen and (max-width: 700px){
+  body{
+    padding-top: 50px;
+  }
+  .profile {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 35px;
+  }
+  .profile p{
+    font-size: 0.7em;
+  }
+  articles .articles{
+  font-family: STHeiti Light, helvetica, Arial;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+  articles .title a{
+  font-family: STHeiti Light, helvetica, Arial;
+  text-align: left;
+  font-size: 0.5em;
+  text-decoration: none;
+}
 }
