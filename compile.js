@@ -3,7 +3,7 @@ var markdown = require("markdown").markdown;
 var pinyin = require("pinyin");
 var _ = require("underscore");
 
-var mds = fs.readdirSync("markdowns");
+var mds = fs.readdirSync("newfile");
 var template = fs.readFileSync("assets/article.html").toString();
 var compiled = _.template(template);
 mds.forEach(function(item){
@@ -14,8 +14,9 @@ mds.forEach(function(item){
 	}).reduce(function(prev,next){
 		return prev.concat(next)
 	},[]).join("_");
-	var html = markdown.toHTML(fs.readFileSync("markdowns/"+item).toString());
+	var html = markdown.toHTML(fs.readFileSync("newfile/"+item).toString());
 	fs.writeFileSync("archives/"+py+".html",compiled({
+		raw: encodeURIComponent(py),
 		title: title,
 		html: html
 	}));
