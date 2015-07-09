@@ -1,0 +1,186 @@
+#Angular 2初体验
+
+自从2014年AngularJS团队宣布开发Angular 2开始，关于Angular 2的各种小道消息就一直没有间断过。直到2014年的ng-europe大会，Angular 2才揭开了一点点神秘的面纱，相较于Angular 1.x，Angular 2在诸多方面都有了很大的改动，比如：
+
+ - 没有了controller
+ - 没有了$scope  
+ - 没有了数据双向绑定
+ - 没有了directive
+
+除了这些改动之外，Angular 2还宣布将采用一种叫做AtScript的新语言来进行开发，在[AtScript的设计草案](https://docs.google.com/a/c4media.com/document/d/11YUzC-1d0V1-Q3V0fQ7KSit97HnZoKVygDxpWzEYW0U/mobilebasic?pli=1&viewopt=127)中，我们可以看到，AtScript是JavaScript语言的一个超集，它对JavaScript的一些"缺点"进行了补充，同时还进行了一些增强，其中比较重要的部分就是增加了annotation，中文译为"注解"，其中又包括:
+
+ - 类型注解
+ - 字段注解
+ - 元数据注解
+
+在Angular 2中，annotation将作为一个重要的部分出现。在目前浏览器连ES6支持都很有限的大环境之下，AtScript代码当然不能直接在浏览器中运行，因此需要采用一些编译器将AtScript编译为目前浏览器普遍支持的ES5代码，例如谷歌出品的Traceur编译器。
+
+然而，在差不多半年之后，2015年的3月5日，微软的TypeScript团队在msdn的[一篇博客](http://blogs.msdn.com/b/typescript/archive/2015/03/05/angular-2-0-built-on-typescript.aspx)中宣布Angular 2将采用TypeScript进行开发，这篇博客这样写道:
+
+> 经过和Angular团队几个月的合作，我们要在此宣布一项激动人心的决定。
+> 首先我们要感谢过去一点时间非常愉快和合作。我们高兴的宣布Angular 2将采用TypeScript进行开发。
+> 
+>...
+> 
+> 我们和Angular团队一起设计了一系列新特性来帮助开发者在使用类似于Angular 2这样的框架时能够编写出更简洁的代码，其中包括一种使用元数据(metadata)来声明类的方法。
+
+虽然关于Angular团队放弃AtScript的计划原因不得而知，但是我认为采用TypeScript是一件好事，有以下几个原因：
+
+ - TypeScript于2012年发行，到目前为止已经是一门成熟的语言
+ - 相比从零开始的AtScript，TypeScript已经有一个比较繁盛的社区
+ - 因为不需要从头设计一门新语言，Angular 2的开发时间将会缩短
+ 
+接下来的一段时间，Angular很沉寂，就连新发布的Angular 1.4似乎也没有引起太大的动静。当然，其中很大一部分原因应该归结为React大热，以及React Native的火上浇油。常言道：古来只有新人笑，有谁听到旧人哭。在这里似乎得到了印证。就在大家不注意的时候，Angular 2的[项目主页](angular.io)悄悄上线，其中包括了到目前为止Angular 2最新的文档和资源，也包括较为详尽的代码示例。虽然Angular 2目前还处于alpha阶段，在未来还可能会有较大变动，因而并不能放心的在现实世界的项目中进行使用，但是提前学习起来也未必不是一件好事情。
+
+接下来，我们将使用Angular 2框架来编写一个简单的"Hello World"应用。在这里需要说明的是，编写Angular 2应用时我们除了使用TypeScript之外，还可以直接使用你熟悉的ES5代码来编写，但是使用TypeScript来编写Angular 2应用，不经代码会更加简洁，而且也更能够理解Angular 2的设计思想。如果不特别说明，接下来的代码都将使用TypeScript进行编写。
+
+工欲善其事，必先利其器。既然要使用TypeScript，我们首先就需要安装TypeScript。TypeScript使用npm进行安装，首先保证你的电脑上安装了node，然后在命令行里面输入:
+
+> npm install typescript -g
+
+安装好typescript之后，我们还需要安装tsd，即TypeScript Definition。对于不熟悉TypeScript的同学，这里需要特别解释一下tsd是什么，有什么作用。
+
+TypeScript顾名思义，从字面上来看最大的特点就是在JavaScript的基础上增加了静态变量，在ES5中，变量是没有类型的，比如说一个变量`x`:
+
+```
+var x = "angular 2";
+//此时x是一个字符串类型
+var x = 1;
+//此时x是一个数字类型
+var x = {};
+//此时x是一个对象类型
+```
+
+在TypeScript中，所有的对象都有类型，比如说我们要定义一个字符串类型的变量`x`:
+
+<pre>
+<code class="javascript">
+var x: string = "angular 2";
+</code>
+</pre>
+
+变量`x`冒号后面跟着的`string`代表的就是`x`的变量类型，当然，由于TypeScript是JavaScript的一个超集，因此也会在变量赋值时对变量类型进行推断。在TypeScript代码编译为ES5代码时，遇到变量类型没有显式指明，又无法通过变量赋值来进行隐式推断的情况，就会将其视为一个错误。举个例子，假设我们现在要使用一个叫做demo.js的库，这个库中有一个字符串类型常量`version`，我在自己的TypeScript代码`app.ts`中有这么一段代码想要输出`version`这个常量:
+
+```
+console.log(version);
+```
+
+因为我在编写`app.ts`时并没有定义`version`这个变量，因此在将`app.ts`编译为ES5代码时，TypeScript编译器无法对`version`这个变量的类型进行推断，就会报错。因此，我们在使用其他库/框架的时候，需要首先引入一个叫做tsd的文件，来告诉TypeScript编译器，这些库里面的变量和方法都是什么类型的，哪些是字符串，哪些是数字，哪些是类，这样的话TypeScript在进行编译工作时才不会报错。当然你可能会说，OMG，这么多的库和框架，难道要我自己去做这个工作吗？
+
+好消息是对于主流的库和框架，这个工作已经有库/框架作者或者社区帮助你完成了，我们只需要安装tsd命令行工具即可:	
+
+> npm install tsd -g
+
+安装完成之后，我们就可以来下载`angular2`的tsd文件了，运行下面命令:
+
+> tsd install angular2
+
+下载安装完成以后，当前目录下会出现一个叫做`typings`的文件夹，其中又有一个`angular2/angular2.d.ts`的文件，这个文件里面就包含了angular2里面的类型定义的所有信息。
+
+接着我们来正式来创建我们的第一个angular2应用，首先创建一个`app.ts`的文件，在该文件中，首先引入angular2的tsd文件：
+
+```
+/// <reference path="typings/angular2/angular2.d.ts" />
+```
+
+接着引入`angular2模块`:
+
+<pre>
+<code class="javascript">
+import {Component, View, bootstrap} from 'angular2/angular2';
+</code>
+</pre>
+
+正如文章开头说的，Angular 2放弃了directive，而采用和React类似的Component的设定，因此接下来我们需要定义一个Component:
+
+```
+// 这里定义注解部分
+@Component({
+  selector: 'my-app'
+})
+@View({
+  template: '<h1>Hello {{ name }}</h1>'
+})
+// 这里定义控制器部分
+class MyAppComponent {
+  name: string;
+  
+  constructor() {
+    this.name = 'Angular 2';
+  }
+}
+```
+
+上面代码中我们看到的`@Component`和`@View`是类`MyAppComponent`的注解，目的是为类`MyAppComponent`添加一些元数据，这样的语法叫做`decorator`，目前是ES7中的一个草案。根据代码很容易看出，`@Component`的作用是使用CSS选择器说明这个组件应该是位于哪个标签上，而`@View`的作用是说明这个组件的模板是什么。而`MyAppComponent`中的constructor方法则是用于在初始化的时候为`name`变量赋值为`Angular 2`。
+
+在定义好组件之后，我们接下来需要启动这个应用，在`app.ts`中添加以下代码:
+
+```
+bootstrap(MyAppComponent);
+```
+
+到目前为止，最简单的Angular2应用代码已经编写完成了，我们接下来需要把这段代码放到页面中来查看效果。
+
+首先使用tsc把app.ts编译为ES5代码，使用下面的命令:
+
+ > tsc -m commonjs -t es5 --emitDecoratorMetadata app.ts
+
+此时，TypeScript编译器会将`app.ts`编译为`app.js`。接下来创建一个叫做`index.html`的文件，在其中输入如下代码:
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular 2 Quickstart</title>
+    <script src="https://github.jspm.io/jmcriffey/bower-traceur-runtime@0.0.87/traceur-runtime.js">
+    </script>
+    <script src="https://jspm.io/system@0.16.js"></script>
+    <script src="./angular2.dev.js"></script>
+</head>
+  <body>
+    <my-app></my-app>
+    <script>
+    	System.import('app');
+    </script>
+  </body>
+</html>
+```
+
+在上面的代码中，除了加载`angular2.dev.js`之外，还额外加载了`traceur-runtime.js`和`system.js`两个文件，其中`system.js`用于加载模块，而`traceur-runtime`应该是用来为`angular.dev.js`提供一个`ES6`的运行环境，在`angular2.dev.js`的代码中，可以看到`$traceurRuntime.createClass`这样的代码，应该将ES6中的`class`代码使用traceur编译之后的代码。但是疑问就来了，既然Angular 2使用TypeScript进行开发，为什么还要使用Traceur呢？不知道是出于什么方面的考量。这个问题暂时没想明白，就留在以后的文章中解答吧！
+
+由于使用system加载模块需要server环境，因此我们这里还需要运行一个server，如果电脑上安装有php，name可以使用php内置的server，运行下面的命令:
+
+> php -S localhost:8080
+
+然后在浏览器中输入`localhost:8080`就能够看到代码效果。如果没有安装php，可以首先安装node模块`http-server`，运行下面命令:
+
+> node install http-server -g
+
+安装完成之后，运行下面命令:
+
+> http-server
+
+然后在浏览器中输入`localhost:8080`就能够看到代码效果。
+
+##总结
+
+ - Angular2借鉴了React等框架的设计思想，也朝着组件化的方向发展了
+ - Angular2 现在问题多多，<del>完全不能</del>不建议在实际产品中使用
+ - Decorator等新东西挺有意思，值得接着学习
+ 
+##done！
+
+参考文章：
+
+ 1. Angular2 5 MIN QUICKSTART  https://angular.io/docs/js/latest/quickstart.html
+ 2. Angular 2: Built on TypeScript http://blogs.msdn.com/b/typescript/archive/2015/03/05/angular-2-0-built-on-typescript.aspx
+
+
+
+
+
+
+
+
+ 
+ 

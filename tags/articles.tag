@@ -1,7 +1,7 @@
 <articles>
   <div class="articles">
     <div class="article" each={opts.articles}>
-      <span class="title"><a href="javascript: void 0">{title}</a></span>
+      <span class="title"><a href="{link}">{title}</a></span>
       <div class="appendix">
       	<span class="date">{date}</span>
       	<span each={tags}>

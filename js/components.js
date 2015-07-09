@@ -1,4 +1,4 @@
-riot.tag('articles', '<div class="articles"> <div class="article" each="{opts.articles}"> <span class="title"><a href="javascript: void 0">{title}</a></span> <div class="appendix"> <span class="date">{date}</span> <span each="{tags}"> <span class="tag" riot-style="background-color:{bgcolor};color:{fontcolor}">{name}</span> </span> <div class="clear"></div> </div> </div> </div>', function(opts) {
+riot.tag('articles', '<div class="articles"> <div class="article" each="{opts.articles}"> <span class="title"><a href="{link}">{title}</a></span> <div class="appendix"> <span class="date">{date}</span> <span each="{tags}"> <span class="tag" riot-style="background-color:{bgcolor};color:{fontcolor}">{name}</span> </span> <div class="clear"></div> </div> </div> </div>', function(opts) {
 
 });
 

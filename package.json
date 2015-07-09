@@ -1,0 +1,28 @@
+{
+  "name": "jabez128.github.io",
+  "version": "1.0.0",
+  "description": "张小俊的博客",
+  "main": "compile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jabez128/jabez128.github.io.git"
+  },
+  "keywords": [
+    "jabez128",
+    "blog"
+  ],
+  "author": "jabez zhang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jabez128/jabez128.github.io/issues"
+  },
+  "homepage": "https://github.com/jabez128/jabez128.github.io",
+  "dependencies": {
+    "markdown": "^0.5.0",
+    "pinyin": "^2.5.0",
+    "underscore": "^1.8.3"
+  }
+}
