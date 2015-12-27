@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>demo</title>
+	<meta name="viewport" content="width: 750,user-scalable=no">
+</head>
+<body>
+	<script type="text/javascript">
+		document.write(navigator.userAgent);
+	</script>
+	<div></div>
+	<script type="text/javascript">
+		document.write(document.documentElement.clientWidth);
+	</script>
+</body>
+</html>
