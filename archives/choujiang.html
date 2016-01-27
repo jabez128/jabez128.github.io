@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>年终抽奖配对</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/4.0.0-alpha.2/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
+	<style type="text/css">
+	body{
+		padding: 15px;
+	}
+	h2{
+		text-align: center;
+
+	}
+	</style>
+</head>
+<body>
+	<h2>2015盘古自助壕biu抽奖</h2>
+	<div style="text-align:center;margin-bottom: 20px;">
+		<button type="button" class='btn btn-success'>配对</button>
+	</div>
+	<table class="table table-bordered table-striped">
+  		<thead>
+  			<tr>
+  				<th>people1</th>
+  				<th>people2</th>
+  			</tr>
+  		</thead>
+  		<tbody>
+  		</tbody>
+	</table>
+	<script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.js"></script>
+	<script type="text/javascript">
+		function shuffle(arr) {
+		    var i,
+		        j,
+		        temp;
+		    for (i = arr.length - 1; i > 0; i--) {
+		        j = Math.floor(Math.random() * (i + 1));
+		        temp = arr[i];
+		        arr[i] = arr[j];
+		        arr[j] = temp;
+		    }
+		    return arr;    
+		};
+		$("button").on("click tap",function(){
+			$("tbody").empty();
+			var pool = shuffle(["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"]);
+			for(var i=0;i<11;i++){
+				$("tbody").append("<tr><td>"+pool.pop()+"</td><td>"+pool.pop()+"</td></tr>");
+			}
+		})
+		
+	</script>
+</body>
+</html>
