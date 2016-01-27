@@ -19,7 +19,8 @@
 <body>
 	<h2>2015盘古自助壕biu抽奖</h2>
 	<div style="text-align:center;margin-bottom: 20px;">
-		<button type="button" class='btn btn-success'>配对</button>
+		<button type="button" class='btn btn-success match'>配一对</button>
+		<button type="button" class='btn btn-danger reset'>重置</button>
 	</div>
 	<table class="table table-bordered table-striped">
   		<thead>
@@ -33,6 +34,7 @@
 	</table>
 	<script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.js"></script>
 	<script type="text/javascript">
+		var pool = shuffle(["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"]);
 		function shuffle(arr) {
 		    var i,
 		        j,
@@ -45,13 +47,18 @@
 		    }
 		    return arr;    
 		};
-		$("button").on("click tap",function(){
-			$("tbody").empty();
-			var pool = shuffle(["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"]);
-			for(var i=0;i<11;i++){
+		$(".match").on("click tap",function(){
+			if(pool.length > 0){
 				$("tbody").append("<tr><td>"+pool.pop()+"</td><td>"+pool.pop()+"</td></tr>");
+			}else{
+				alert("已全部配对完成");
 			}
-		})
+		});
+		$(".reset").on("click tap",function(){
+			pool = shuffle(["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"]);
+			$("tbody").empty();
+		});
+
 		
 	</script>
 </body>
