@@ -12,7 +12,6 @@
 	}
 	h2{
 		text-align: center;
-
 	}
 	</style>
 </head>
@@ -22,19 +21,11 @@
 		<button type="button" class='btn btn-success match'>配一对</button>
 		<button type="button" class='btn btn-danger reset'>重置</button>
 	</div>
-	<table class="table table-bordered table-striped">
-  		<thead>
-  			<tr>
-  				<th>people1</th>
-  				<th>people2</th>
-  			</tr>
-  		</thead>
-  		<tbody>
-  		</tbody>
-	</table>
+	<div class="match_result"></div>
 	<script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.js"></script>
 	<script type="text/javascript">
-		var pool = shuffle(["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"]);
+		var pool1 = shuffle(["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"]);
+		var pool2 = shuffle(["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"]);
 		function shuffle(arr) {
 		    var i,
 		        j,
@@ -48,17 +39,24 @@
 		    return arr;    
 		};
 		$(".match").on("click tap",function(){
-			if(pool.length > 0){
-				$("tbody").append("<tr><td>"+pool.pop()+"</td><td>"+pool.pop()+"</td></tr>");
+			var length = pool1.length;
+			if(length == 0){
+				alert("配对已全部完成");
 			}else{
-				alert("已全部配对完成");
+				if(pool1[0] == pool2[0]){
+					var r = Math.floor(Math.random() * (length-2))+1;
+					var tmp = pool2[r];
+					pool2[r] = pool2[0];
+					pool2[0] = tmp;
+				}
+				$(".match_result").append($("<p><span class='text-success'>"+pool1.shift()+"</span> 获得 <span class='text-danger'>"+pool2.shift()+"</span> 的礼物</p>"));
 			}
 		});
 		$(".reset").on("click tap",function(){
-			pool = shuffle(["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"]);
-			$("tbody").empty();
+			pool1 = shuffle(["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"]);
+			pool2 = shuffle(["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"]);
+			$(".match_result").empty();
 		});
-
 		
 	</script>
 </body>
