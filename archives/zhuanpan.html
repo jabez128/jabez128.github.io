@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html style="margin:0;padding:0">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=270"/>
+<meta name="wap-font-scale" content="no">
+<meta name="applicable-device" content="pc,mobile">
+<meta name="format-detection" content="telephone=no">
+<style>
+.rotate {
+    width: 250px;
+    height: 362px;
+    background: url(http://febuild.me/archives/img/zpbg.png) no-repeat 0 0;
+    background-size: 100% 100%;
+    margin: 115px auto 0 auto;
+    position: relative;
+}
+.rotate canvas {
+    width: 215px;
+    height: 215px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: 100% 100%;
+    margin: 18px 0 0 18px;
+}
+.lottery {
+    width: 81px;
+    height: 68px;
+    background: url(http://febuild.me/archives/img/start.png) no-repeat 0 0;
+    background-size: 100% 100%;
+    position: absolute;
+    left: 92px;
+    top: 92px;
+    z-index: 3;
+}
+</style>
+</head>
+<body style="margin:0;padding:10px">
+<div class="rotate scale" style="margin-top: 0">
+<canvas id="prize" width="800" height="800" style="background-image:url(http://febuild.me/archives/img/zp.png)" data-pic="http://febuild.me/archives/img/zp.png"></canvas>
+<div class="lottery"></div>
+</div>
+<script type="text/javascript" src="http://cdn.bootcss.com/zepto/1.1.6/zepto.min.js"></script>
+<script type="text/javascript">
+(function() {
+
+	function prize(arg) {
+		var me = this;
+		var canvas = $(arg['canvas'])[0];
+		canvas.width = arg.width;
+		canvas.height = arg.height;
+		var ctx = canvas.getContext('2d');
+		ctx.translate(arg.x, arg.y);
+		var img = new Image();
+		img.src = arg.img;
+		img.onload = function() {
+			me.reset();
+			me.init = true;
+			if(typeof(arg['onload']) == 'function') {
+				arg['onload']();
+			}
+		};
+		this.img = img;
+		this.ctx = ctx;
+		this.spendTime = 0;
+		this.canvas = canvas;
+		this.width = arg.width;
+		this.height = arg.height;
+		this.animate = false;
+	};
+
+	prize.prototype = {
+
+		// 重置
+		reset: function() {
+			if(this.animate) {
+				return false;
+			}
+			this.ctx.restore();
+			this._renderFrame();
+			return true;
+		},
+
+		// 开始转动（end：结束角度，during：持续时间，callback：完成回调）
+		start: function(end, during, callback) {
+			if(!this.init) {
+				return false;
+			}
+			if(this.animate) {
+				return false;
+			}
+			this.animate = true;
+			var me = this;
+			var startTime = new Date().getTime();
+			var draw = function() {
+				if(!me.animate) {
+					return;
+				}
+				var nowTime = new Date().getTime();
+				var degree = me._easeOutBack(nowTime - startTime, 0, end, during, 0);
+				if((end > 0 && degree < end) || (end < 0 && degree > end)) {
+					me.ctx.save();
+					me.ctx.rotate(degree);
+					lastDegree = degree;
+					me._renderFrame();
+					me.ctx.restore();
+					me.spendTime = new Date().getTime() - nowTime;
+					me._requestAnimationFrame(draw);
+				} else {
+					me.ctx.save();
+					me.ctx.rotate(end);
+					me._renderFrame();
+					me.ctx.restore();
+					me.animate = false;
+					if(typeof(callback) == 'function') {
+						callback();
+					}
+				}
+			};
+			me._requestAnimationFrame(draw);
+		},
+
+		// 停止转动
+		stop: function() {
+			this.animate = false;
+		},
+
+		// requestAnimation兼容方案
+		_requestAnimationFrame: function(callback) {
+			if(window.requestAnimationFrame) {
+				window.requestAnimationFrame(callback);
+			} else {
+				setTimeout(callback, Math.max(0, 16.66666 - this.spendTime));
+			}
+		},
+
+		// 衰减函数
+		_easeOutBack: function(t, b, _c, d, s) {
+			var c = _c - b;
+			if(s === void 0) {
+				s = 1.70158;
+			}
+			return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
+		},
+
+		// 绘制单帧转盘图
+		_renderFrame: function() {
+			this.ctx.clearRect(this.width / -2, this.height / -2, this.width, this.height);
+			this.ctx.drawImage(this.img, this.width / -2, this.height / -2, this.width, this.height);
+		}
+	};
+
+	window.PRIZE_ROTATE = prize;
+
+})();
+	
+var prize = new PRIZE_ROTATE({
+	img: $('#prize').data('pic'),
+	x: 800 / 2,
+	y: 800 / 2,
+	width: 800,
+	height: 800,
+	canvas: '#prize',
+	onload: function() {
+		$('#prize')[0].style.cssText = '';
+	}
+});
+
+
+$('.lottery').click(function() {
+
+	var list = ["赵晖","董一粟","王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"];
+	var count = list.length;
+	var index = parseInt(Math.random() * count);
+	var len = 1 / count;
+	var offset = len / 2 + len / 3 * Math.random() * (Math.random() > 0.5 ? 1 : -1);
+	var end = 10 + (count - index) * len - offset;
+	prize.start(2 * Math.PI * end, 15000);
+
+});
+</script>	
+</body>
+</html><!--22015664571500798730012811-->
+<script> var _trace_page_logid = 2201566457; </script>
