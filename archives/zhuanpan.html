@@ -171,7 +171,7 @@ $('.lottery').click(function() {
 
 	var list = ["王大卓","常富国","陈俊安","丁栋","霍英杰","刘元方","鲁彦","孙浩浩","王传正","王俊","许恒","徐一智","叶扬帆","张浩然","张会云","张校云","张玉山","张志福","周欣宇","桂超贤"];
 	var count = list.length;
-	var index = parseInt(Math.random() * count);
+	var index = Math.floor(Math.random() * count);
 	var len = 1 / count;
 	var offset = len / 2 + len / 3 * Math.random() * (Math.random() > 0.5 ? 1 : -1);
 	var end = 10 + (count - index) * len - offset;
