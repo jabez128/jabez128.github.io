@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <title>单身狗我知道你还没睡，进来吧...</title>
+        <meta charset='utf-8'>
+        <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+        <script src="./paper.js"></script>
+        <style>
+            canvas{
+                width: 100%;
+                height: 100%;
+            }
+            body{
+                margin: 0px;
+                padding: 0px;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="stage"></canvas>
+        <script>
+            var canvas, view, circle, ball, vector, velocity, tmpvelocity, sector, radius, score, start_angle, end_angle;
+            var render = function() {
+                view.draw();
+                vector.angle += velocity;
+                ball.position = circle.position.clone().add(vector);
+                requestAnimationFrame(render);
+            }
+            var create_sector = function(){
+                var vector = new paper.Point(radius, 0);
+                vector.angle += Math.random()*360 - 180;
+                start_angle = vector.angle;
+                var from = circle.position.clone().add(vector);
+                var range = Math.random()*40 + 30;
+                end_angle = start_angle + range;
+                vector.angle += range/2;
+                var through = circle.position.clone().add(vector);
+                vector.angle += range/2;
+                var to = circle.position.clone().add(vector);
+                var sector = new paper.Path.Arc({
+                    from: from,
+                    through: through,
+                    to: to,
+                    strokeColor: "rgb(213,26,33)"
+                });
+                //sector.add(circle.position.clone());
+                //sector.smooth();
+                sector.strokeColor = "rgb(213,26,33)";
+                sector.strokeWidth = 3;
+                sector.insertBelow(ball)
+                return sector;
+            }
+            document.addEventListener("DOMContentLoaded",function(){
+               canvas = document.querySelector("#stage");
+               canvas.width = window.innerWidth;
+               canvas.height = window.innerHeight;
+               paper.setup(canvas);
+               view = paper.view;
+               //画一个矩形
+               var rect = new paper.Path.Rectangle({
+                   point: [0,0],
+                   width: view.size.width,
+                   height: view.size.height,
+                   fillColor: "rgb(87,96,105)"
+               });
+               rect.sendToBack();
+               //画一个中心圆
+               radius = window.innerWidth/2-30;
+               circle = new paper.Path.Circle(new paper.Point(view.center), radius);
+               circle.strokeWidth = 3;
+               circle.strokeColor = "rgb(173,195,192)";
+               //在中心画得分
+               text = new paper.PointText(view.center.clone());
+               text.justification = 'center';
+               text.fillColor = 'white';
+               text.fontSize = 130;
+               text.position.y += 50
+               text.content = 0;
+               //画一个向量
+               vector = new paper.Point(radius, 0);
+               //画一个小球
+               ball = new paper.Path.Circle(circle.position.clone().add(vector), 10);
+               ball.fillColor = "rgb(247,68,97)";
+               //画一个扇形
+               sector = create_sector();
+               //设置初始速度
+               velocity = 3;
+               //绑定事件
+               view.onMouseDown = function(){
+                   tmpvelocity = velocity;
+                   velocity = 0;
+                   var now_angle = ball.position.subtract(view.center).angle;
+                   if(now_angle >= start_angle && now_angle <= end_angle){
+                       text.content = parseInt(text.content) + 1;
+                       if(tmpvelocity < 11){
+                          velocity = tmpvelocity + 0.2;
+                       }else{
+                          velocity = tmpvelocity;
+                       }
+                       sector.remove();
+                       sector = create_sector();
+                   }else{
+                       velocity = 3;
+                       text.content = 0;
+                       sector.remove();
+                       sector = create_sector();
+                   }
+               }
+               /*
+               view.onMouseUp = function(){
+                   if(tmpvelocity < 11){
+                     velocity = tmpvelocity + 0.2;
+                   }else{
+                     velocity = tmpvelocity;
+                   }
+                   sector.remove();
+                   sector = create_sector();
+               }
+               */
+               //view.draw();
+               render();
+               alert("游戏规则：\n 1、点击屏幕的时候，小球停止在红色区域内得1分 \n 2、别人在过情人节的时候我在写H5小游戏，麻蛋 T T")
+            });
+        
+        </script>
+    </body>
+</html>
