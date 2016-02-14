@@ -14,15 +14,12 @@
                 padding: 0px;
                 position: relative;
             }
-            #weicon{
-              position: absolute;
-              top: -100px;
-              left: -100px
-            }
         </style>
     </head>
     <body>
-        <img src="./img/doge.png" id="weicon" />
+        <div style="margin:0 auto;display:none;">
+            <img src="./img/doge.png" id="weicon" />
+        </div>
         <canvas id="stage"></canvas>
         <script>
             var canvas, view, circle, ball, vector, velocity, tmpvelocity, sector, radius, score, start_angle, end_angle;
